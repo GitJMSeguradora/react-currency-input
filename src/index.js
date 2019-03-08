@@ -114,7 +114,7 @@ class CurrencyInput extends Component {
    */
   componentDidMount() {
     let node = ReactDOM.findDOMNode(this.theInput);
-    let selectionStart, selectionEnd;
+    let selectionEnd;
 
     if (this.props.autoFocus) {
       this.theInput.focus();
@@ -127,8 +127,6 @@ class CurrencyInput extends Component {
       );
       selectionStart = Math.min(node.selectionStart, selectionEnd);
     }
-
-    // this.setSelectionRange(node, selectionStart, selectionEnd);
   }
 
   /**
@@ -149,7 +147,6 @@ class CurrencyInput extends Component {
    */
   componentDidUpdate(prevProps, prevState) {
     const { decimalSeparator } = this.props;
-    let node = ReactDOM.findDOMNode(this.theInput);
     let isNegative = (this.theInput.value.match(/-/g) || []).length % 2 === 1;
     let minPos = this.props.prefix.length + (isNegative ? 1 : 0);
     let selectionEnd = Math.max(
@@ -187,7 +184,6 @@ class CurrencyInput extends Component {
       selectionStart = selectionEnd;
     }
 
-    // this.setSelectionRange(node, selectionStart, selectionEnd);
     this.inputSelectionStart = selectionStart;
     this.inputSelectionEnd = selectionEnd;
   }
