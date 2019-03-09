@@ -108,28 +108,6 @@ class CurrencyInput extends Component {
   }
 
   /**
-   * Component lifecycle function.
-   * @returns {XML}
-   * @see https://facebook.github.io/react/docs/react-component.html#componentdidmount
-   */
-  componentDidMount() {
-    let node = ReactDOM.findDOMNode(this.theInput);
-    let selectionEnd;
-
-    if (this.props.autoFocus) {
-      this.theInput.focus();
-      selectionEnd = this.state.maskedValue.length - this.props.suffix.length;
-      selectionStart = selectionEnd;
-    } else {
-      selectionEnd = Math.min(
-        node.selectionEnd,
-        this.theInput.value.length - this.props.suffix.length
-      );
-      selectionStart = Math.min(node.selectionStart, selectionEnd);
-    }
-  }
-
-  /**
    * Component lifecycle function
    * @returns {XML}
    * @see https://facebook.github.io/react/docs/react-component.html#componentwillupdate
