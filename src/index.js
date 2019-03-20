@@ -15,6 +15,7 @@ class CurrencyInput extends Component {
     this.prepareProps = this.prepareProps.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
     this.setSelectionRange = this.setSelectionRange.bind(this);
     this.state = this.prepareProps(this.props);
 
@@ -136,8 +137,8 @@ class CurrencyInput extends Component {
     let regexEscapeRegex = /[-[\]{}()*+?.,\\^$|#\s]/g;
     let separatorsRegex = new RegExp(
       decimalSeparator.replace(regexEscapeRegex, '\\$&') +
-        '|' +
-        this.props.thousandSeparator.replace(regexEscapeRegex, '\\$&'),
+      '|' +
+      this.props.thousandSeparator.replace(regexEscapeRegex, '\\$&'),
       'g'
     );
     let currSeparatorCount = (this.state.maskedValue.match(separatorsRegex) || []).length;
@@ -178,6 +179,17 @@ class CurrencyInput extends Component {
     }
   }
 
+
+  /**
+   * onKeyDown Event Handler
+   * @param event 
+   */
+  handleOnKeyDown(event) {
+    if (event.keyCode === 8) {
+      this.handleChange(event)
+    }
+  }
+
   /**
    * onChange Event Handler
    * @param event
@@ -191,7 +203,8 @@ class CurrencyInput extends Component {
       this.props.thousandSeparator,
       this.props.allowNegative,
       this.props.prefix,
-      this.props.suffix
+      this.props.suffix,
+      event.keyCode === 8
     );
 
     event.persist(); // fixes issue #23
@@ -239,6 +252,7 @@ class CurrencyInput extends Component {
         onChange={this.handleChange}
         onFocus={this.handleFocus}
         onMouseUp={this.handleFocus}
+        onKeyDown={this.handleOnKeyDown}
         {...this.state.customProps}
       />
     );
@@ -265,10 +279,10 @@ CurrencyInput.propTypes = {
 };
 
 CurrencyInput.defaultProps = {
-  onChange: function(maskValue, value, event) {
+  onChange: function (maskValue, value, event) {
     /*no-op*/
   },
-  onChangeEvent: function(event, maskValue, value) {
+  onChangeEvent: function (event, maskValue, value) {
     /*no-op*/
   },
   autoFocus: false,
